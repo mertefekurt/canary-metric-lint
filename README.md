@@ -6,12 +6,12 @@
 
 Check canary rollout plans for metric, threshold, and rollback gaps. It solves review drift by turning plain-text plans into deterministic CI-friendly findings.
 
-## Input Contract 2
+## Input Contract
 
 Accepts canary rollout plan. The reader supports plain text, JSON, JSONL, and CSV so the
 tool can fit into scripts, CI jobs, and review exports.
 
-## CLI Walkthrough 2
+## CLI Walkthrough
 
 ```bash
 python -m pip install -e ".[dev]"
@@ -20,7 +20,7 @@ canary-metric-lint examples/sample.txt --json --fail-on medium
 python -m canary_metric_lint --help
 ```
 
-## Rule Surface 2
+## Rule Surface
 
 | Rule | Severity | Meaning |
 |---|---:|---|
@@ -28,7 +28,7 @@ python -m canary_metric_lint --help
 | `missing-threshold` | medium | canary threshold is unclear |
 | `unknown-rollback` | low | rollback is unclear |
 
-## Validation Notes 2
+## Validation Notes
 
 ```bash
 ruff check .
