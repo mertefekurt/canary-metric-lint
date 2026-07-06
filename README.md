@@ -1,48 +1,50 @@
-# canary-metric-lint
+<p align="center">
+  <img src="assets/readme-cover.svg" alt="Canary Metric Lint cover" width="100%" />
+</p>
 
-> Check canary rollout plans for metric, threshold, and rollback gaps.
+# Canary Metric Lint
 
-## Operator guide Overview
+![stack](https://img.shields.io/badge/stack-Python-0891b2?style=flat-square) ![python](https://img.shields.io/badge/python-3.11-b45309?style=flat-square) ![license](https://img.shields.io/badge/license-MIT-be185d?style=flat-square) ![ci](https://img.shields.io/badge/ci-GitHub%20Actions-4b5563?style=flat-square)
 
-Check canary rollout plans for metric, threshold, and rollback gaps. It solves review drift by turning plain-text plans into deterministic CI-friendly findings.
+Check canary rollout plans for metric, threshold, and rollback gaps.
 
-## Input Contract
+## Why it exists
 
-Accepts canary rollout plan. The reader supports plain text, JSON, JSONL, and CSV so the
-tool can fit into scripts, CI jobs, and review exports.
+Small review tasks are easy to skip when the signal lives in notes, spreadsheets, or loosely formatted exports. `canary-metric-lint` turns those checks into a repeatable command with plain findings and CI-friendly exit codes.
 
-## CLI Walkthrough
+## Quick run
 
 ```bash
 python -m pip install -e ".[dev]"
 canary-metric-lint examples/sample.txt
 canary-metric-lint examples/sample.txt --json --fail-on medium
-python -m canary_metric_lint --help
 ```
 
-## Rule Surface
+## Rule set
 
-| Rule | Severity | Meaning |
-|---|---:|---|
+| Rule | Severity | What it catches |
+| --- | --- | --- |
 | `missing-metric` | high | canary metric is missing |
 | `missing-threshold` | medium | canary threshold is unclear |
 | `unknown-rollback` | low | rollback is unclear |
 
-## Validation Notes
+## Input
 
-```bash
-ruff check .
-pytest
-python -m canary_metric_lint --help
-```
+The reader accepts plain text, JSON, JSONL, and CSV. That keeps it useful for hand-written notes, review exports, and small automation jobs.
 
-Example risky input:
+## Sample risky input
 
 ```text
 canary metric missing threshold none rollback unknown
 ```
 
-Architecture: `cli.py` handles arguments, `core.py` reads and evaluates records, and
-`rules.py` keeps the project-specific policy explicit.
+## Development
 
-License: MIT.
+```bash
+python -m pip install -e ".[dev]"
+ruff check .
+pytest
+python -m canary_metric_lint --help
+```
+
+`cli.py` handles arguments, `core.py` reads and evaluates records, and `rules.py` keeps the Canary Metric Lint policy easy to review.
