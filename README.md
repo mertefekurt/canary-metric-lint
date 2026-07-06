@@ -2,35 +2,32 @@
 
 Check canary rollout plans for metric, threshold, and rollback gaps.
 
-## First impression
-
 ![Canary Metric Lint cover](assets/readme-cover.svg)
 
-When this tool reports something, I want the finding to be boringly explicit: what matched, how severe it is, and what a reviewer should clean up.
+## Inspection line
 
-## Tripwires
+![Workflow diagram](assets/readme-diagram.svg)
 
-- `missing-metric` (high): canary metric is missing. Fix: choose a user-impact metric.
-- `missing-threshold` (medium): canary threshold is unclear. Fix: define stop or rollback threshold.
-- `unknown-rollback` (low): rollback is unclear. Fix: link rollback command or runbook.
+## Decision points
 
-## Runbook
+- `missing-metric` - canary metric is missing (high); choose a user-impact metric.
+- `missing-threshold` - canary threshold is unclear (medium); define stop or rollback threshold.
+- `unknown-rollback` - rollback is unclear (low); link rollback command or runbook.
+
+## Code trail
+
+```text
+.github/        CI workflow
+examples/       sample inputs
+src/            package source
+tests/          test coverage
+```
+
+## Try the fixture
 
 ```bash
 git clone https://github.com/mertefekurt/canary-metric-lint.git
 cd canary-metric-lint
-python -m venv .venv
-source .venv/bin/activate
 python -m pip install -e ".[dev]"
-```
-
-Then:
-
-```bash
 canary-metric-lint examples/sample.txt
-canary-metric-lint examples/sample.txt --json
 ```
-
-## Development note
-
-The policy lives in `rules.py`; parsing and rendering stay separate so the rule list is easy to audit.
